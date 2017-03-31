@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">WolletDotMe</string>
+    <string name="auth_failed">Login Fail</string>
 </resources>
