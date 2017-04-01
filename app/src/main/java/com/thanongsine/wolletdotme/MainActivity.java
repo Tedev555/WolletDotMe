@@ -1,5 +1,6 @@
 package com.thanongsine.wolletdotme;
 
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
     EditText emailTxt;
     EditText passTxt;
     Button btnLogIn;
-    TextView statusTxt;
+    TextView signUpTxt;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,7 @@ public class MainActivity extends AppCompatActivity {
         emailTxt = (EditText) findViewById(R.id.email_txt);
         passTxt = (EditText) findViewById(R.id.password_txt);
         btnLogIn = (Button) findViewById(R.id.btn_login);
-        statusTxt = (TextView) findViewById(R.id.status_txt);
-
+        signUpTxt = (TextView) findViewById(R.id.sing_up_txt);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -53,13 +53,22 @@ public class MainActivity extends AppCompatActivity {
 
             }
         };
+
+        //When click Login
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 final String email = emailTxt.getText().toString();
-                final String password = emailTxt.getText().toString();
+                final String password = passTxt.getText().toString();
 
                 signIn(email, password);
+            }
+        });
+
+        signUpTxt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(MainActivity.this, SignUpActivity.class));
             }
         });
 
@@ -81,7 +90,8 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void signIn(String email, String password) {
-        Log.d(TAG, "signIn:" + email);
+//        Log.d(TAG, "signIn:" + email);
+//        Log.d(TAG, "password:" + password);
 
         // [START sign_in_with_email]
         mAuth.signInWithEmailAndPassword(email, password)
@@ -97,11 +107,24 @@ public class MainActivity extends AppCompatActivity {
                             Log.w(TAG, "signInWithEmail:failed", task.getException());
                             Toast.makeText(MainActivity.this, R.string.auth_failed,
                                     Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toast.makeText(MainActivity.this, "Login Success",
+                                    Toast.LENGTH_SHORT).show();
+
+                            //Get user information
+                            FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+                            if (user != null) {
+                                String email = user.getEmail();
+                                String uId = user.getUid();
+                                Log.e(TAG, "user : " + uId);
+                                Log.e(TAG, "email : " + email);
+                            }
+
+
                         }
 
                         // [START_EXCLUDE]
                         if (!task.isSuccessful()) {
-                            statusTxt.setText(R.string.auth_failed);
                         }
                         // [END_EXCLUDE]
                     }
