@@ -34,7 +34,7 @@ public class MainActivity extends AppCompatActivity {
 
         emailTxt = (EditText) findViewById(R.id.email_txt);
         passTxt = (EditText) findViewById(R.id.password_txt);
-        btnLogIn = (Button) findViewById(R.id.btn_login);
+        btnLogIn = (Button) findViewById(R.id.btn_sign_up);
         signUpTxt = (TextView) findViewById(R.id.sing_up_txt);
 
         mAuth = FirebaseAuth.getInstance();
