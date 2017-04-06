@@ -18,7 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
-public class SignInActivity extends AppCompatActivity {
+public class SignInActivity extends AppCompatActivity implements View.OnClickListener{
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     String TAG = "myTag";
@@ -27,8 +27,9 @@ public class SignInActivity extends AppCompatActivity {
     EditText passTxt;
     Button btnLogIn;
     TextView signUpTxt;
+    TextView forgotTxt;
 
-    //// TODO: 4/3/17 1. Progressbar, 2. sendEmailVerification, update UI
+    //// TODO: 4/3/17 1. Progressbar, 2. sendEmailVerification
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +40,7 @@ public class SignInActivity extends AppCompatActivity {
         passTxt = (EditText) findViewById(R.id.password_txt);
         btnLogIn = (Button) findViewById(R.id.btn_sign_up);
         signUpTxt = (TextView) findViewById(R.id.sing_up_txt);
+        forgotTxt = (TextView) findViewById(R.id.forgot_txt);
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -74,6 +76,8 @@ public class SignInActivity extends AppCompatActivity {
                 startActivity(new Intent(SignInActivity.this, SignUpActivity.class));
             }
         });
+
+        forgotTxt.setOnClickListener(this);
 
 
     }
@@ -159,5 +163,17 @@ public class SignInActivity extends AppCompatActivity {
         }
 
         return valid;
+    }
+
+    private void sendEmailVerification() {
+
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.forgot_txt:
+                startActivity(new Intent(SignInActivity.this, ForgotActivity.class));
+        }
     }
 }
