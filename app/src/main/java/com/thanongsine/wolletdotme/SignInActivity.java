@@ -1,5 +1,6 @@
 package com.thanongsine.wolletdotme;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -29,7 +30,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
     TextView signUpTxt;
     TextView forgotTxt;
 
-    //// TODO: 4/3/17 1. Progressbar, 2. sendEmailVerification
+    private ProgressDialog progressDialog;
+
+    //// TODO: 4/3/17 1. Progressbar
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,13 +62,22 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
             }
         };
 
+        //ProgressDialog
+        progressDialog = new ProgressDialog(this);
+
         //When click Login
         btnLogIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Show progress dialog
+                progressDialog.setMessage("Processing ");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                //progressDialog.setIndeterminate(true);
+                progressDialog.show();
+
                 final String email = emailTxt.getText().toString();
                 final String password = passTxt.getText().toString();
-
                 signIn(email, password);
             }
         });
@@ -107,6 +119,9 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
+
+                        //Hide progress dialog
+                        progressDialog.dismiss();
                         Log.d(TAG, "signInWithEmail:onComplete:" + task.isSuccessful());
 
                         // If sign in fails, display a message to the user. If sign in succeeds

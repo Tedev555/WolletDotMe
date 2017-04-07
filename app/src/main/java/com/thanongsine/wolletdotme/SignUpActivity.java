@@ -1,5 +1,6 @@
 package com.thanongsine.wolletdotme;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -30,6 +31,8 @@ public class SignUpActivity extends AppCompatActivity {
     private FirebaseAuth.AuthStateListener mAuthListener;
     String TAG = "myTag";
 
+    private ProgressDialog progressDialog;
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,9 +58,17 @@ public class SignUpActivity extends AppCompatActivity {
         passwordTxt = (TextView) findViewById(R.id.password_txt);
         btnSignUp = (Button) findViewById(R.id.btn_sign_up);
 
+        progressDialog = new ProgressDialog(this);
+
         btnSignUp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                //Show progress dialog
+                progressDialog.setMessage("Processing ");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
+
                 signUpAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
             }
         });
@@ -77,6 +88,8 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
+                progressDialog.dismiss();
+
                 // If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
                 // signed in user can be handled in the listener.
@@ -86,6 +99,7 @@ public class SignUpActivity extends AppCompatActivity {
                 }else {
                     Toast.makeText(SignUpActivity.this, R.string.sign_up_success,
                             Toast.LENGTH_SHORT).show();
+                    finish();
                 }
             }
         });
