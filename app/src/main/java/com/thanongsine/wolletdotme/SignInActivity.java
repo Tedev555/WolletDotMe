@@ -40,7 +40,7 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
         setContentView(R.layout.activity_sign_in);
 
         emailTxt = (EditText) findViewById(R.id.email_txt);
-        passTxt = (EditText) findViewById(R.id.password_txt);
+        passTxt = (EditText) findViewById(R.id.username_txt);
         btnLogIn = (Button) findViewById(R.id.btn_sign_up);
         signUpTxt = (TextView) findViewById(R.id.sing_up_txt);
         forgotTxt = (TextView) findViewById(R.id.forgot_txt);

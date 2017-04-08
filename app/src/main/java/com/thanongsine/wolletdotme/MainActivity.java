@@ -26,11 +26,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ProgressDialog progressDialog;
 
-    //Firebase RealTime Database
-    FirebaseDatabase database;
-    DatabaseReference rootRef;
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -38,12 +33,6 @@ public class MainActivity extends AppCompatActivity {
 
         btnLogOut = (Button) findViewById(R.id.btn_log_out);
         mAuth = FirebaseAuth.getInstance();
-        database = FirebaseDatabase.getInstance();
-
-        rootRef = database.getReference();
-        DatabaseReference userRef = rootRef.child("users");
-        DatabaseReference msgRef = rootRef.child("messages");
-        userRef.child("id-123").setValue("Ted555");
 
         mAuthListener = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -70,22 +59,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        addNewUser("ted555", "12345");
-
-//        rootRef.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(DataSnapshot dataSnapshot) {
-//
-//                String value = dataSnapshot.getValue(String.class);
-//                Log.d(TAG, "Value is: " + value);
-//            }
-//
-//            @Override
-//            public void onCancelled(DatabaseError databaseError) {
-//                // Failed to read value
-//                Log.w(TAG, "Failed to read value.", databaseError.toException());
-//            }
-//        });
+        //rootRef.addValueEventListener(valueEventListener);
     }
 
     @Override
@@ -102,12 +76,25 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    //Sign out
     private void signOut() {
         mAuth.signOut();
     }
 
-    private void addNewUser(String username, String password) {
-        User user = new User(username, password);
-        rootRef.child("users").child("id-12346").setValue(user);
-    }
+    //Data value is changed
+    ValueEventListener valueEventListener = new ValueEventListener() {
+        @Override
+        public void onDataChange(DataSnapshot dataSnapshot) {
+
+            User value = dataSnapshot.getValue(User.class);
+            Log.d(TAG, "Value is: " + value);
+
+        }
+
+        @Override
+        public void onCancelled(DatabaseError databaseError) {
+            // Failed to read value
+                Log.w(TAG, "Failed to read value.", databaseError.toException());
+        }
+    };
 }

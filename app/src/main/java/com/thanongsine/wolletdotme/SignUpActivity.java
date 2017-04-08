@@ -17,6 +17,8 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 /**
  * Created by ted555 on 4/1/17.
@@ -25,11 +27,19 @@ import com.google.firebase.auth.FirebaseUser;
 public class SignUpActivity extends AppCompatActivity {
     TextView emailTxt;
     TextView passwordTxt;
+    TextView usernameTxt;
     Button btnSignUp;
 
     private FirebaseAuth mAuth;
     private FirebaseAuth.AuthStateListener mAuthListener;
     String TAG = "myTag";
+
+    //Firebase RealTime Database
+    FirebaseDatabase database;
+    DatabaseReference rootRef;
+    DatabaseReference userRef;
+
+    String uId;
 
     private ProgressDialog progressDialog;
 
@@ -39,23 +49,10 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         mAuth = FirebaseAuth.getInstance();
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    //User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
-                }else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                }
-
-            }
-        };
 
         emailTxt = (TextView) findViewById(R.id.email_txt);
         passwordTxt = (TextView) findViewById(R.id.password_txt);
+        usernameTxt = (TextView) findViewById(R.id.username_txt);
         btnSignUp = (Button) findViewById(R.id.btn_sign_up);
 
         progressDialog = new ProgressDialog(this);
@@ -64,18 +61,34 @@ public class SignUpActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                //Show progress dialog
-                progressDialog.setMessage("Processing ");
-                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
-                progressDialog.show();
-
-                signUpAccount(emailTxt.getText().toString(), passwordTxt.getText().toString());
+                signUpAccount(emailTxt.getText().toString(), passwordTxt.getText().toString()
+                        , usernameTxt.getText().toString());
             }
         });
 
     }
 
-    private void signUpAccount(String email, String password) {
+    private String getUserId() {
+        mAuthListener = new FirebaseAuth.AuthStateListener() {
+            @Override
+            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+                FirebaseUser user = firebaseAuth.getCurrentUser();
+                if (user != null) {
+                    //User is signed in
+                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+                    uId = user.getUid();
+                }else {
+                    // User is signed out
+                    Log.d(TAG, "onAuthStateChanged:signed_out");
+                }
+
+            }
+        };
+
+        return uId;
+    }
+
+    private void signUpAccount(final String email, String password, final String username) {
 
         Log.d(TAG, "createAccount:" + email);
         if (!validateForm()) {
@@ -88,7 +101,10 @@ public class SignUpActivity extends AppCompatActivity {
             public void onComplete(@NonNull Task<AuthResult> task) {
                 Log.d(TAG, "createUserWithEmail:onComplete:" + task.isSuccessful());
 
-                progressDialog.dismiss();
+                //Show progress dialog
+                progressDialog.setMessage("Processing ");
+                progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER);
+                progressDialog.show();
 
                 // If sign in fails, display a message to the user. If sign in succeeds
                 // the auth state listener will be notified and logic to handle the
@@ -97,8 +113,12 @@ public class SignUpActivity extends AppCompatActivity {
                     Toast.makeText(SignUpActivity.this, R.string.auth_failed,
                             Toast.LENGTH_SHORT).show();
                 }else {
+
+                    String uId = getUserId();
+                    addNewUser(uId, username, email);
                     Toast.makeText(SignUpActivity.this, R.string.sign_up_success,
                             Toast.LENGTH_SHORT).show();
+                    progressDialog.dismiss();
                     finish();
                 }
             }
@@ -124,6 +144,21 @@ public class SignUpActivity extends AppCompatActivity {
             passwordTxt.setError(null);
         }
 
+        String username = usernameTxt.getText().toString();
+        if (TextUtils.isEmpty(email)) {
+            usernameTxt.setError("Required.");
+            valid = false;
+        }else {
+            passwordTxt.setError(null);
+        }
+
         return valid;
+    }
+
+    private void addNewUser(String uId, String username, String email) {
+        database = FirebaseDatabase.getInstance();
+        rootRef = database.getReference();
+        User user = new User(username, email);
+        rootRef.child("users").child("123").setValue(user);
     }
 }

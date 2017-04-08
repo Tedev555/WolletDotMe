@@ -10,7 +10,7 @@ import com.google.firebase.database.IgnoreExtraProperties;
 public class User {
 
     public String username;
-    public String password;
+    public String email;
 
     public User() {
 
@@ -18,7 +18,7 @@ public class User {
 
     public User(String username, String password) {
         this.username = username;
-        this.password = password;
+        this.email = password;
     }
 
 }
