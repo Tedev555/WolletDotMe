@@ -16,6 +16,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.thanongsine.wolletdotme.Dao.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,6 +26,10 @@ public class MainActivity extends AppCompatActivity {
     private Button btnLogOut;
 
     private ProgressDialog progressDialog;
+
+    //RealTime database
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    DatabaseReference rootRef = database.getReference();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,3 +103,5 @@ public class MainActivity extends AppCompatActivity {
         }
     };
 }
+
+//TODO : Add userProfile activity that user can manipulate user's information

@@ -1,4 +1,4 @@
-package com.thanongsine.wolletdotme;
+package com.thanongsine.wolletdotme.Dao;
 
 import com.google.firebase.database.IgnoreExtraProperties;
 
@@ -11,14 +11,16 @@ public class User {
 
     public String username;
     public String email;
+    public String sex;
 
     public User() {
 
     }
 
-    public User(String username, String password) {
+    public User(String username, String password, String sex) {
         this.username = username;
         this.email = password;
+        this.sex = sex;
     }
 
 }

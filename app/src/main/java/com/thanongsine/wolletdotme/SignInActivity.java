@@ -32,8 +32,6 @@ public class SignInActivity extends AppCompatActivity implements View.OnClickLis
 
     private ProgressDialog progressDialog;
 
-    //// TODO: 4/3/17 1. Progressbar
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
