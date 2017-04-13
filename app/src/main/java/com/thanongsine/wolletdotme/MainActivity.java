@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
+
         btnLogOut.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
