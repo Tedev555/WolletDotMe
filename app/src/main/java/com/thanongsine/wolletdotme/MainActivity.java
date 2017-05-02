@@ -36,73 +36,78 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        btnLogOut = (Button) findViewById(R.id.btn_log_out);
-        mAuth = FirebaseAuth.getInstance();
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.fragment_container, FragmentMain.newInstance())
+                .commit();
 
-        mAuthListener = new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null) {
-                    //User is signed in
-                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//        btnLogOut = (Button) findViewById(R.id.btn_log_out);
+//        mAuth = FirebaseAuth.getInstance();
+//
+//        mAuthListener = new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                FirebaseUser user = firebaseAuth.getCurrentUser();
+//                if (user != null) {
+//                    //User is signed in
+//                    Log.d(TAG, "onAuthStateChanged:signed_in:" + user.getUid());
+//
+//                }else {
+//                    // User is signed out
+//                    Log.d(TAG, "onAuthStateChanged:signed_out");
+//                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
+//                    finish();
+//                }
+//
+//            }
+//        };
 
-                }else {
-                    // User is signed out
-                    Log.d(TAG, "onAuthStateChanged:signed_out");
-                    startActivity(new Intent(MainActivity.this, SignInActivity.class));
-                    finish();
-                }
-
-            }
-        };
-
-
-        btnLogOut.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                signOut();
-            }
-        });
+//
+//        btnLogOut.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                signOut();
+//            }
+//        });
 
         //rootRef.addValueEventListener(valueEventListener);
     }
 
-    @Override
-    protected void onStart() {
-        super.onStart();
-        mAuth.addAuthStateListener(mAuthListener);
-    }
-
-    @Override
-    protected void onStop() {
-        super.onStop();
-        if (mAuthListener != null) {
-            mAuth.removeAuthStateListener(mAuthListener);
-        }
-    }
-
-    //Sign out
-    private void signOut() {
-        mAuth.signOut();
-    }
-
-    //Data value is changed
-    ValueEventListener valueEventListener = new ValueEventListener() {
-        @Override
-        public void onDataChange(DataSnapshot dataSnapshot) {
-
-            User value = dataSnapshot.getValue(User.class);
-            Log.d(TAG, "Value is: " + value);
-
-        }
-
-        @Override
-        public void onCancelled(DatabaseError databaseError) {
-            // Failed to read value
-                Log.w(TAG, "Failed to read value.", databaseError.toException());
-        }
-    };
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        mAuth.addAuthStateListener(mAuthListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        if (mAuthListener != null) {
+//            mAuth.removeAuthStateListener(mAuthListener);
+//        }
+//    }
+//
+//    //Sign out
+//    private void signOut() {
+//        mAuth.signOut();
+//    }
+//
+//    //Data value is changed
+//    ValueEventListener valueEventListener = new ValueEventListener() {
+//        @Override
+//        public void onDataChange(DataSnapshot dataSnapshot) {
+//
+//            User value = dataSnapshot.getValue(User.class);
+//            Log.d(TAG, "Value is: " + value);
+//
+//        }
+//
+//        @Override
+//        public void onCancelled(DatabaseError databaseError) {
+//            // Failed to read value
+//                Log.w(TAG, "Failed to read value.", databaseError.toException());
+//        }
+//    };
 }
 
 //TODO : Add userProfile activity that user can manipulate user's information
