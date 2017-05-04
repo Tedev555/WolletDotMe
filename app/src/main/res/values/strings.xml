@@ -3,4 +3,8 @@
     <string name="auth_failed">Login Fail</string>
     <string name="auth_success">Login Success</string>
     <string name="sign_up_success">Sign up Success</string>
+    <string name="text_expense">expense</string>
+    <string name="text_income">income</string>
+    <string name="text_statistic">statistic</string>
+    <string name="text_more">statistic</string>
 </resources>
