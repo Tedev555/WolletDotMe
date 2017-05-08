@@ -1,4 +1,4 @@
-package com.thanongsine.wolletdotme;
+package com.thanongsine.wolletdotme.Activitys;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -20,6 +20,7 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.thanongsine.wolletdotme.Dao.User;
+import com.thanongsine.wolletdotme.R;
 
 /**
  * Created by ted555 on 4/1/17.

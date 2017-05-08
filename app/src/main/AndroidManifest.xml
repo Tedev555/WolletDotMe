@@ -11,24 +11,25 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SignInActivity" />
-        <activity android:name=".SignUpActivity" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Activitys.SignInActivity" />
+        <activity android:name=".Activitys.SignUpActivity" />
+        <activity android:name=".Activitys.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".ForgotActivity" />
-        <activity android:name=".UserProfileActivity">
+        <activity android:name=".Activitys.ForgotActivity" />
+        <activity android:name=".Activitys.UserProfileActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SampleCollap"></activity>
+        <activity android:name=".Activitys.SampleCollap" />
+        <activity android:name=".Activitys.AddStatementActivity"></activity>
     </application>
 
 </manifest>

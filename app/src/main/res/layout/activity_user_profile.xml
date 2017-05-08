@@ -7,7 +7,7 @@
     android:paddingTop="16dp"
     android:paddingStart="16dp"
     android:paddingEnd="16dp"
-    tools:context="com.thanongsine.wolletdotme.UserProfileActivity">
+    tools:context="com.thanongsine.wolletdotme.Activitys.UserProfileActivity">
 
     <LinearLayout
         android:layout_width="336dp"

@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/action_item1"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/text_expense"/>
+        android:icon="@drawable/ic_format_list_bulleted_black_24dp"
+        android:title="@string/text_expense"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_item2"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/text_income"/>
+        android:icon="@drawable/ic_assessment_black_24dp"
+        android:title="@string/text_statistic"
+        app:showAsAction="ifRoom"/>
     <item
         android:id="@+id/action_item3"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/text_statistic"/>
-    <item
-        android:id="@+id/action_item4"
-        android:icon="@drawable/ic_add_white_24dp"
-        android:title="@string/text_more"/>
+        android:icon="@drawable/ic_more_vert_black_24dp"
+        android:title="@string/text_more"
+        app:showAsAction="ifRoom"/>
 </menu>

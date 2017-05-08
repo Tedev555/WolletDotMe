@@ -1,4 +1,4 @@
-package com.thanongsine.wolletdotme;
+package com.thanongsine.wolletdotme.Activitys;
 
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -14,6 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.thanongsine.wolletdotme.Dao.User;
+import com.thanongsine.wolletdotme.R;
 
 public class UserProfileActivity extends AppCompatActivity {
 
